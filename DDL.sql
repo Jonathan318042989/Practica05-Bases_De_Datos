@@ -1,6 +1,57 @@
 DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
+CREATE TABLE sucursal(
+	idsucursal VARCHAR(10),
+	nombre VARCHAR(50),
+	fechaapertura date,
+	horaapertura time,
+	horacierre time,
+	estado  VARCHAR(50),
+	ciudad  VARCHAR(50),
+	colonia  VARCHAR(50),
+	calle  VARCHAR(50),
+	numero INT,
+	codigopostal INT
+	
+);
+
+-- Restricciones sucursal
+
+ALTER TABLE sucursal ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE sucursal ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE sucursal ADD CONSTRAINT nombreD1 CHECK(nombre <> '');
+ALTER TABLE sucursal ALTER COLUMN fechaapertura SET NOT NULL;
+ALTER TABLE sucursal ADD CONSTRAINT estadoD1 CHECK(estado <>'');
+ALTER TABLE sucursal ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
+ALTER TABLE sucursal ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
+ALTER TABLE sucursal ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal between 1 and 99999);
+ALTER TABLE sucursal ADD CONSTRAiNT numeroD1 CHECK(numero between 10000 and 99999);
+
+ALTER TABLE sucursal ADD CONSTRAINT idsucursalD2 UNIQUE(idsucursal);
+ALTER TABLE sucursal ADD CONSTRAINT sucursal_pkey PRIMARY KEY (idsucursal);
+
+CREATE TABLE telefonosucursal(
+	idsucursal CHAR(18),
+	telefono CHAR(10) 
+);
+
+--Restricciones telefono
+--Dominio
+ALTER TABLE telefonosucursal ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE telefonosucursal ADD CONSTRAINT tidsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE telefonosucursal ADD CONSTRAINT telefonoD1 CHECK (telefono SIMILAR TO '[0-9]*');
+
+--Entidad
+ALTER TABLE telefonosucursal ADD CONSTRAINT telefonosucursal_pkey PRIMARY KEY (idsucursal,telefono);
+
+--Referencial
+ALTER TABLE telefonosucursal ADD CONSTRAINT telefonosucursal_fkey FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal);
+
+-----------------------------------------------------------------------------------------
+
+
 CREATE TABLE cliente(
 	curpcliente CHAR(18),
 	nombrecliente VARCHAR(50),
@@ -74,6 +125,7 @@ REFERENCES cliente (curpcliente);
 
 CREATE TABLE cajero(
 	curpcajero CHAR(18),
+	idsucursal VARCHAR(10),
 	nombrecajero VARCHAR(50),
 	paternocajero VARCHAR(50),
 	maternocajero VARCHAR(50),
@@ -101,8 +153,13 @@ ALTER TABLE cajero ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
 ALTER TABLE cajero ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal between 1 and 99999);
 ALTER TABLE cajero ADD CONSTRAiNT numeroD1 CHECK(numero between 10000 and 99999);
 
+--Entidad
 ALTER TABLE cajero ADD CONSTRAINT curpcajeroD2 UNIQUE(curpcajero);
 ALTER TABLE cajero ADD CONSTRAINT cajero_pkey PRIMARY KEY (curpcajero);
+
+--Referencial
+ALTER TABLE cajero ADD CONSTRAINT cajero_fkey FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal);
 
 CREATE TABLE telefonocajero(
 	curpcajero CHAR(18),
@@ -159,7 +216,7 @@ CREATE TABLE encargado(
 	
 );
 
--- Restricciones cliente
+-- Restricciones encargado
 
 ALTER TABLE encargado ALTER COLUMN curpencargado SET NOT NULL;
 ALTER TABLE encargado ADD CONSTRAINT curpencargadoD1 CHECK(CHAR_LENGTH(curpencargado)=18);
@@ -173,8 +230,13 @@ ALTER TABLE encargado ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
 ALTER TABLE encargado ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal between 1 and 99999);
 ALTER TABLE encargado ADD CONSTRAiNT numeroD1 CHECK(numero between 10000 and 99999);
 
+--Entidad
 ALTER TABLE encargado ADD CONSTRAINT curpencargadoD2 UNIQUE(curpencargado);
 ALTER TABLE encargado ADD CONSTRAINT encargado_pkey PRIMARY KEY (curpencargado);
+
+--Referencial
+ALTER TABLE encargado ADD CONSTRAINT encargado_fkey FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal);
 
 CREATE TABLE telefonoencargado(
 	curpencargado CHAR(18),
@@ -231,13 +293,13 @@ CREATE TABLE gerente(
 	
 );
 
--- Restricciones cliente
+-- Restricciones gerente
 
-ALTER TABLE gerente ALTER COLUMN curpencargado SET NOT NULL;
-ALTER TABLE gerente ADD CONSTRAINT curpencargadoD1 CHECK(CHAR_LENGTH(curpencargado)=18);
-ALTER TABLE gerente ADD CONSTRAINT nombreencargadoD1 CHECK(nombreencargado <> '');
-ALTER TABLE gerente ADD CONSTRAINT paternoencargadoD1 CHECK(paternoencargado <>'');
-ALTER TABLE gerente ADD CONSTRAINT maternoencargadoD1 CHECK(maternoencargado <>'');
+ALTER TABLE gerente ALTER COLUMN curpgerente SET NOT NULL;
+ALTER TABLE gerente ADD CONSTRAINT curpgerenteD1 CHECK(CHAR_LENGTH(curpgerente)=18);
+ALTER TABLE gerente ADD CONSTRAINT nombregerenteD1 CHECK(nombregerente <> '');
+ALTER TABLE gerente ADD CONSTRAINT paternogerenteD1 CHECK(paternogerente<>'');
+ALTER TABLE gerente ADD CONSTRAINT maternogerenteD1 CHECK(maternogerente <>'');
 ALTER TABLE gerente ALTER COLUMN fechanacimiento SET NOT NULL;
 ALTER TABLE gerente ADD CONSTRAINT estadoD1 CHECK(estado <>'');
 ALTER TABLE gerente ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
@@ -245,43 +307,48 @@ ALTER TABLE gerente ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
 ALTER TABLE gerente ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal between 1 and 99999);
 ALTER TABLE gerente ADD CONSTRAiNT numeroD1 CHECK(numero between 10000 and 99999);
 
-ALTER TABLE encargado ADD CONSTRAINT curpencargadoD2 UNIQUE(curpencargado);
-ALTER TABLE encargado ADD CONSTRAINT encargado_pkey PRIMARY KEY (curpencargado);
+--Entidad
+ALTER TABLE gerente ADD CONSTRAINT curpgerenteD2 UNIQUE(curpgerente);
+ALTER TABLE gerente ADD CONSTRAINT gerente_pkey PRIMARY KEY (curpgerente);
 
-CREATE TABLE telefonoencargado(
-	curpencargado CHAR(18),
+--Referencial
+ALTER TABLE gerente ADD CONSTRAINT gerente_fkey FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal);
+
+CREATE TABLE telefonogerente(
+	curpgerente CHAR(18),
 	telefono CHAR(10) 
 );
 
 --Restricciones telefono
 --Dominio
-ALTER TABLE telefonoencargado ALTER COLUMN curpencargado SET NOT NULL;
-ALTER TABLE telefonoencargado ADD CONSTRAINT tcurpencargadoD1 CHECK(CHAR_LENGTH(curpencargado)=18);
-ALTER TABLE telefonoencargado ADD CONSTRAINT telefonoD1 CHECK (telefono SIMILAR TO '[0-9]*');
+ALTER TABLE telefonogerente ALTER COLUMN curpgerente SET NOT NULL;
+ALTER TABLE telefonogerente ADD CONSTRAINT tcurpegerenteD1 CHECK(CHAR_LENGTH(curpgerente)=18);
+ALTER TABLE telefonogerente ADD CONSTRAINT telefonoD1 CHECK (telefono SIMILAR TO '[0-9]*');
 
 --Entidad
-ALTER TABLE telefonoencargado ADD CONSTRAINT telefonoencargado_pkey PRIMARY KEY (curpencargado,telefono);
+ALTER TABLE telefonogerente ADD CONSTRAINT telefonogerente_pkey PRIMARY KEY (curpgerente,telefono);
 
 --Referencial
-ALTER TABLE telefonoencargado ADD CONSTRAINT telefonoencargado_fkey FOREIGN KEY (curpencargado)
-REFERENCES encargado (curpencargado);
+ALTER TABLE telefonogerente ADD CONSTRAINT telefonogerente_fkey FOREIGN KEY (curpgerente)
+REFERENCES gerente (curpgerente);
 
-CREATE TABLE correoencargado(
-	curpencargado CHAR(18),
+CREATE TABLE correogerente(
+	curpgerente CHAR(18),
 	correo VARCHAR(50) 
 );
 
 --Restricciones correo
 --Dominio
-ALTER TABLE correoencargado ALTER COLUMN curpencargado SET NOT NULL;
-ALTER TABLE correoencargado ADD CONSTRAINT ccurpencargadoD1 CHECK(CHAR_LENGTH(curpencargado)=18);
-ALTER TABLE correoencargado ADD CONSTRAINT correoencargadoD1 CHECK(correo <> '');
+ALTER TABLE correogerente ALTER COLUMN curpgerente SET NOT NULL;
+ALTER TABLE correogerente ADD CONSTRAINT ccurpgerenteD1 CHECK(CHAR_LENGTH(curpgerente)=18);
+ALTER TABLE correogerente ADD CONSTRAINT correogerenteD1 CHECK(correo <> '');
 
 --Entidad
-ALTER TABLE correoencargado ADD CONSTRAINT correoencargado_pkey PRIMARY KEY (curpencargado,correo);
+ALTER TABLE correogerente ADD CONSTRAINT correogerente_pkey PRIMARY KEY (curpgerente,correo);
 
 --Referencial
-ALTER TABLE correoencargado ADD CONSTRAINT correoencargado_fkey FOREIGN KEY (curpencargado)
-REFERENCES encargado (curpencargado);
+ALTER TABLE correogerente ADD CONSTRAINT correogerente_fkey FOREIGN KEY (curpgerente)
+REFERENCES gerente (curpgerente);
 
 
