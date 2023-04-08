@@ -351,4 +351,49 @@ ALTER TABLE correogerente ADD CONSTRAINT correogerente_pkey PRIMARY KEY (curpger
 ALTER TABLE correogerente ADD CONSTRAINT correogerente_fkey FOREIGN KEY (curpgerente)
 REFERENCES gerente (curpgerente);
 
+----------------------------------------------------------------------------------------------------------
 
+CREATE TABLE venta(
+	idventa CHAR(10),
+	fechaventa date,
+	ticket  CHAR(10),
+	formapago  CHAR(10)
+);
+
+-- Restricciones venta
+
+ALTER TABLE venta ALTER COLUMN idventa SET NOT NULL;
+ALTER TABLE venta ADD CONSTRAINT idventa1 CHECK(CHAR_LENGTH(idventa)=10);
+ALTER TABLE venta ALTER COLUMN fechaventa SET NOT NULL;
+ALTER TABLE venta ALTER COLUMN ticket SET NOT NULL;
+ALTER TABLE venta ADD CONSTRAINT ticket1 CHECK(CHAR_LENGTH(ticket)=10);
+ALTER TABLE venta ADD CONSTRAINT formapago1 CHECK(formapago <>'');
+
+--Entidad
+ALTER TABLE venta ADD CONSTRAINT idventa2 UNIQUE(idventa);
+ALTER TABLE venta ADD CONSTRAINT venta_pkey PRIMARY KEY (idventa);
+
+--Referencial
+ALTER TABLE venta ADD CONSTRAINT venta_fkey FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal);
+
+ALTER TABLE venta ADD CONSTRAINT venta_fkey FOREIGN KEY (curpcliente)
+REFERENCES sucursal (curpcliente);
+
+ALTER TABLE venta ADD CONSTRAINT venta_fkey FOREIGN KEY (curpcajero)
+REFERENCES sucursal (curpcajero);
+
+-------------------------------------------------------------------------------------------------------
+
+CREATE TABLE electronica(
+	idproductoe CHAR(10),
+	nombre VARCHAR(50),
+	marca VARCHAR(50),
+	precio CHAR(10),
+	cantidad INT,
+	descripcion VARCHAR(50),
+	categoria VARCHAR(50),
+	consumowatts INT
+);
+
+--Restricciones de electronica
