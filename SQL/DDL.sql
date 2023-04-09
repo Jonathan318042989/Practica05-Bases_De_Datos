@@ -374,14 +374,14 @@ ALTER TABLE venta ADD CONSTRAINT idventa2 UNIQUE(idventa);
 ALTER TABLE venta ADD CONSTRAINT venta_pkey PRIMARY KEY (idventa);
 
 --Referencial
-ALTER TABLE venta ADD CONSTRAINT venta_fkey FOREIGN KEY (idsucursal)
+ALTER TABLE venta ADD CONSTRAINT venta_fkey1 FOREIGN KEY (idsucursal)
 REFERENCES sucursal (idsucursal);
 
-ALTER TABLE venta ADD CONSTRAINT venta_fkey FOREIGN KEY (curpcliente)
-REFERENCES sucursal (curpcliente);
+ALTER TABLE venta ADD CONSTRAINT venta_fkey2 FOREIGN KEY (curpcliente)
+REFERENCES cliente (curpcliente);
 
-ALTER TABLE venta ADD CONSTRAINT venta_fkey FOREIGN KEY (curpcajero)
-REFERENCES sucursal (curpcajero);
+ALTER TABLE venta ADD CONSTRAINT venta_fkey3 FOREIGN KEY (curpcajero)
+REFERENCES cajero (curpcajero);
 
 -------------------------------------------------------------------------------------------------------
 
@@ -389,7 +389,7 @@ CREATE TABLE electronica(
 	idproductoe CHAR(10),
 	nombre VARCHAR(50),
 	marca VARCHAR(50),
-	precio CHAR(10),
+	precio INT,
 	cantidad INT,
 	descripcion VARCHAR(50),
 	categoria VARCHAR(50),
@@ -397,3 +397,91 @@ CREATE TABLE electronica(
 );
 
 --Restricciones de electronica
+
+ALTER TABLE electronica ALTER COLUMN idproductoe SET NOT NULL;
+ALTER TABLE electronica ADD CONSTRAINT nombreE1 CHECK(nombre <> '');
+ALTER TABLE electronica ADD CONSTRAINT marcaE1 CHECK(marca<>'');
+ALTER TABLE electronica ADD CONSTRAiNT precioE1 CHECK(precio between 1 and 99999);
+ALTER TABLE electronica ADD CONSTRAiNT cantidadE1 CHECK(cantidad between 1 and 99999);
+ALTER TABLE electronica ADD CONSTRAINT descripcionE1 CHECK(descripcion <>'');
+ALTER TABLE electronica ADD CONSTRAINT categoriaE1 CHECK(categoria <>'');
+ALTER TABLE electronica ADD CONSTRAiNT consumowatts1 CHECK(consumowatts between 1 and 99999);
+
+--Entidad
+
+ALTER TABLE electronica ADD CONSTRAINT UNIQUE(idproductoe);
+ALTER TABLE electronica ADD CONSTRAINT electronica_pkey PRIMARY KEY (idproductoe);
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+CREATE TABLE perecedero(
+	idproductop CHAR(10),
+	nombre VARCHAR(50),
+	marca VARCHAR(50),
+	precio INT,
+	cantidad INT,
+	descripcion VARCHAR(50),
+	presentacion VARCHAR(50),
+	fechapreparado date,
+	fechacadcorta date,
+	tiporefrigeracion VARCHAR(50)
+);
+
+--Restricciones de perecedero
+
+ALTER TABLE perecedero ALTER COLUMN idproductop SET NOT NULL;
+ALTER TABLE perecedero ADD CONSTRAINT nombreP1 CHECK(nombre <> '');
+ALTER TABLE perecedero ADD CONSTRAINT marcaP1 CHECK(marca<>'');
+ALTER TABLE perecedero ADD CONSTRAiNT precioP1 CHECK(precio between 1 and 99999);
+ALTER TABLE perecedero ADD CONSTRAiNT cantidadP1 CHECK(cantidad between 1 and 99999);
+ALTER TABLE perecedero ADD CONSTRAINT descripcionP1 CHECK(descripcion <>'');
+ALTER TABLE perecedero ADD CONSTRAINT presentacionP1 CHECK(presentacion<>'');
+ALTER TABLE perecedero ALTER COLUMN fechapreparado SET NOT NULL;
+ALTER TABLE perecedero ALTER COLUMN fechacadcorta SET NOT NULL;
+ALTER TABLE perecedero ADD CONSTRAINT tiporefrigeracionP1 CHECK(tiporefrigeracion<>'');
+
+
+--Entidad
+
+ALTER TABLE perecedero ADD CONSTRAINT UNIQUE(idproductop);
+ALTER TABLE perecedero ADD CONSTRAINT perecedero_pkey PRIMARY KEY (idproductop);
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE noperecedero(
+	idproductonp CHAR(10),
+	nombre VARCHAR(50),
+	marca VARCHAR(50),
+	precio INT,
+	cantidad INT,
+	descripcion VARCHAR(50),
+	presentacion VARCHAR(50),
+	fechapreparado date,
+	fechacadlarga date,
+	condicionalmacenamiento VARCHAR(50)
+);
+
+--Restricciones de noperecedero
+
+ALTER TABLE noperecedero ALTER COLUMN idproductonp SET NOT NULL;
+ALTER TABLE noperecedero ADD CONSTRAINT nombreNP1 CHECK(nombre <> '');
+ALTER TABLE noperecedero ADD CONSTRAINT marcaNP1 CHECK(marca<>'');
+ALTER TABLE noperecedero ADD CONSTRAiNT precioNP1 CHECK(precio between 1 and 99999);
+ALTER TABLE noperecedero ADD CONSTRAiNT cantidadNP1 CHECK(cantidad between 1 and 99999);
+ALTER TABLE noperecedero ADD CONSTRAINT descripcionNP1 CHECK(descripcion <>'');
+ALTER TABLE noperecedero ADD CONSTRAINT presentacionNP1 CHECK(presentacion<>'');
+ALTER TABLE noperecedero ALTER COLUMN fechapreparado SET NOT NULL;
+ALTER TABLE noperecedero ALTER COLUMN fechacadlarga SET NOT NULL;
+ALTER TABLE noperecedero ADD CONSTRAINT condicionalmacenamientoNP1 CHECK(condicionalmacenamiento<>'');
+
+
+--Entidad
+
+ALTER TABLE noperecedero ADD CONSTRAINT UNIQUE(idproductonp);
+ALTER TABLE noperecedero ADD CONSTRAINT noperecedero_pkey PRIMARY KEY (idproductonp);
+
+
+------------------------------------------------------------------------------------------------------------------------------
