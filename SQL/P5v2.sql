@@ -531,7 +531,7 @@ CREATE TABLE poseerp(
 ALTER TABLE poseerp ALTER COLUMN idsucursal SET NOT NULL;
 ALTER TABLE poseerp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
 ALTER TABLE poseerp ALTER COLUMN idproductop SET NOT NULL;
-ALTER TABLE poseerp ADD CONSTRAINT idproductop1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE poseerp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'NP-[0-9]*');
 ALTER TABLE poseerp ADD CONSTRAiNT cantidadestock CHECK(cantidad between 1 and 99999);
 
 
@@ -585,7 +585,7 @@ CREATE TABLE poseere(
 ALTER TABLE poseere ALTER COLUMN idsucursal SET NOT NULL;
 ALTER TABLE poseere ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
 ALTER TABLE poseere ALTER COLUMN idproductoe SET NOT NULL;
-ALTER TABLE poseere ADD CONSTRAINT idproductoe1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE poseere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'NP-[0-9]*');
 ALTER TABLE poseere ADD CONSTRAiNT cantidadestock CHECK(cantidad between 1 and 99999);
 
 
@@ -598,3 +598,4 @@ REFERENCES sucursal (idsucursal)
 
 ALTER TABLE poseere ADD CONSTRAINT poseere_fkey2 FOREIGN KEY (idproductoe) 
 REFERENCES electronica (idproductoe)
+
