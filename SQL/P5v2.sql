@@ -517,4 +517,84 @@ ALTER TABLE noperecedero ADD CONSTRAINT idproductonp2 UNIQUE(idproductonp);
 ALTER TABLE noperecedero ADD CONSTRAINT noperecedero_pkey PRIMARY KEY (idproductonp);
 
 
+
 ------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE poseerp(
+	idsucursal VARCHAR(10),
+    idproductop CHAR(10),
+    cantidadestock INT ,
+    
+);
+
+
+--Restricciones poseerp
+ALTER TABLE poseerp ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE poseerp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE poseerp ALTER COLUMN idproductop SET NOT NULL;
+ALTER TABLE poseerp ADD CONSTRAINT idproductop1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE poseerp ADD CONSTRAiNT cantidadestock CHECK(cantidad between 1 and 99999);
+
+
+--Entidad
+ALTER TABLE poseerp ADD CONSTRAINT poseerp_pkey PRIMARY KEY (idsucursal,idproductop);
+
+--Referencial
+ALTER TABLE poseerp ADD CONSTRAINT poseerp_fkey1 FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal)
+
+ALTER TABLE poseerp ADD CONSTRAINT poseerp_fkey2 FOREIGN KEY (idproductop) 
+REFERENCES perecedero (idproductop)
+
+--------------------------------------------------------------------------------------------------
+CREATE TABLE poseernp(
+	idsucursal VARCHAR(10),
+    idproductonp CHAR(10),
+    cantidadestock INT ,
+    
+);
+
+
+--Restricciones poseernp
+ALTER TABLE poseernp ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE poseernp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE poseernp ALTER COLUMN idproductonp SET NOT NULL;
+ALTER TABLE poseernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE poseernp ADD CONSTRAiNT cantidadestock CHECK(cantidad between 1 and 99999);
+
+
+--Entidad
+ALTER TABLE poseernp ADD CONSTRAINT poseerp_pkey PRIMARY KEY (idsucursal,idproductonp);
+
+--Referencial
+ALTER TABLE poseernp ADD CONSTRAINT poseernp_fkey1 FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal)
+
+ALTER TABLE poseernp ADD CONSTRAINT poseernp_fkey2 FOREIGN KEY (idproductonp) 
+REFERENCES noperecedero (idproductonp)
+
+----------------------------------------------------------------------------------------------------
+CREATE TABLE poseere(
+	idsucursal VARCHAR(10),
+    idproductoe CHAR(10),
+    cantidadestock INT ,
+    
+);
+
+
+--Restricciones poseere
+ALTER TABLE poseere ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE poseere ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE poseere ALTER COLUMN idproductoe SET NOT NULL;
+ALTER TABLE poseere ADD CONSTRAINT idproductoe1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE poseere ADD CONSTRAiNT cantidadestock CHECK(cantidad between 1 and 99999);
+
+
+--Entidad
+ALTER TABLE poseere ADD CONSTRAINT poseere_pkey PRIMARY KEY (idsucursal,idproductoe);
+
+--Referencial
+ALTER TABLE poseere ADD CONSTRAINT poseere_fkey1 FOREIGN KEY (idsucursal)
+REFERENCES sucursal (idsucursal)
+
+ALTER TABLE poseere ADD CONSTRAINT poseere_fkey2 FOREIGN KEY (idproductoe) 
+REFERENCES electronica (idproductoe)
