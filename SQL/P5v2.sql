@@ -599,3 +599,85 @@ REFERENCES sucursal (idsucursal)
 ALTER TABLE poseere ADD CONSTRAINT poseere_fkey2 FOREIGN KEY (idproductoe) 
 REFERENCES electronica (idproductoe)
 
+
+
+
+
+---------------------------------------------------------------------------------------------------
+CREATE TABLE venderp(
+	idventa CHAR(10),
+    idproductop CHAR(10),
+    cantidadproducto INT ,
+    
+);
+
+
+--Restricciones venderp
+ALTER TABLE venderp ALTER COLUMN idventa SET NOT NULL;
+ALTER TABLE venderp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE venderp ALTER COLUMN idproductop SET NOT NULL;
+ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE venderp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
+
+
+--Entidad
+ALTER TABLE venderp ADD CONSTRAINT venderp_pkey PRIMARY KEY (idventa,idproductop);
+
+--Referencial
+ALTER TABLE venderp ADD CONSTRAINT venderp_fkey1 FOREIGN KEY (idventa)
+REFERENCES venta (idventa)
+
+ALTER TABLE venderp ADD CONSTRAINT venderp_fkey2 FOREIGN KEY (idproductop) 
+REFERENCES perecedero (idproductop)
+---------------------------------------------------------------------------------------------------------------
+CREATE TABLE vendernp(
+	idventa CHAR(10),
+    idproductonp CHAR(10),
+    cantidadproducto INT ,
+    
+);
+
+
+--Restricciones vendernp
+ALTER TABLE vendernp ALTER COLUMN idventa SET NOT NULL;
+ALTER TABLE vendernp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE vendernp ALTER COLUMN idproductonp SET NOT NULL;
+ALTER TABLE vendernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE vendernp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
+
+
+--Entidad
+ALTER TABLE vendernp ADD CONSTRAINT vendernp_pkey PRIMARY KEY (idventa,idproductonp);
+
+--Referencial
+ALTER TABLE vendernp ADD CONSTRAINT vendernp_fkey1 FOREIGN KEY (idventa)
+REFERENCES venta (idventa)
+
+ALTER TABLE vendernp ADD CONSTRAINT vendernp_fkey2 FOREIGN KEY (idproductonp) 
+REFERENCES noperecedero (idproductonp)
+----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE vendere(
+	idventa CHAR(10),
+    idproductoe CHAR(10),
+    cantidadproducto INT ,
+    
+);
+
+
+--Restricciones vendere
+ALTER TABLE vendere ALTER COLUMN idventa SET NOT NULL;
+ALTER TABLE vendere ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE vendere ALTER COLUMN idproductoe SET NOT NULL;
+ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE vendere ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
+
+
+--Entidad
+ALTER TABLE vendere ADD CONSTRAINT vendere_pkey PRIMARY KEY (idventa,idproductoe);
+
+--Referencial
+ALTER TABLE vendere ADD CONSTRAINT vendere_fkey1 FOREIGN KEY (idventa)
+REFERENCES venta (idventa)
+
+ALTER TABLE vendere ADD CONSTRAINT vendere_fkey2 FOREIGN KEY (idproductoe) 
+REFERENCES electronica (idproductoe)
