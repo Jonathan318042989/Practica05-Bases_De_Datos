@@ -532,9 +532,6 @@ ALTER TABLE poseerp ALTER COLUMN idproductop SET NOT NULL;
 ALTER TABLE poseerp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]*');
 ALTER TABLE poseerp ADD CONSTRAINT cantidadestock1 CHECK(cantidadestock BETWEEN 1 AND 99999);
 
--- Entidad
-ALTER TABLE poseerp ADD CONSTRAINT poseerp_pkey PRIMARY KEY (idsucursal,idproductop);
-
 -- Referencial
 ALTER TABLE poseerp ADD CONSTRAINT poseerp_fkey1 FOREIGN KEY (idsucursal)
 REFERENCES sucursal (idsucursal);
@@ -555,9 +552,6 @@ ALTER TABLE poseernp ALTER COLUMN idproductonp SET NOT NULL;
 ALTER TABLE poseernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
 ALTER TABLE poseernp ADD CONSTRAINT cantidadestock1 CHECK(cantidadestock BETWEEN 1 AND 99999);
 
--- Entidad
-ALTER TABLE poseernp ADD CONSTRAINT poseernp_pkey PRIMARY KEY (idsucursal,idproductonp);
-
 -- Referencial
 ALTER TABLE poseernp ADD CONSTRAINT poseernp_fkey1 FOREIGN KEY (idsucursal)
 REFERENCES sucursal (idsucursal);
@@ -577,9 +571,6 @@ ALTER TABLE poseere ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-
 ALTER TABLE poseere ALTER COLUMN idproductoe SET NOT NULL;
 ALTER TABLE poseere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]*');
 ALTER TABLE poseere ADD CONSTRAINT cantidadestock1 CHECK(cantidadestock BETWEEN 1 AND 99999);
-
--- Entidad
-ALTER TABLE poseere ADD CONSTRAINT poseere_pkey PRIMARY KEY (idsucursal,idproductoe);
 
 -- Referencial
 ALTER TABLE poseere ADD CONSTRAINT poseere_fkey1 FOREIGN KEY (idsucursal)
@@ -609,10 +600,6 @@ ALTER TABLE venderp ALTER COLUMN idproductop SET NOT NULL;
 ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]*');
 ALTER TABLE venderp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
-
---Entidad
-ALTER TABLE venderp ADD CONSTRAINT venderp_pkey PRIMARY KEY (idventa,idproductop);
-
 --Referencial
 ALTER TABLE venderp ADD CONSTRAINT venderp_fkey1 FOREIGN KEY (idventa)
 REFERENCES venta (idventa)
@@ -634,10 +621,6 @@ ALTER TABLE vendernp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*'
 ALTER TABLE vendernp ALTER COLUMN idproductonp SET NOT NULL;
 ALTER TABLE vendernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
 ALTER TABLE vendernp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
-
-
---Entidad
-ALTER TABLE vendernp ADD CONSTRAINT vendernp_pkey PRIMARY KEY (idventa,idproductonp);
 
 --Referencial
 ALTER TABLE vendernp ADD CONSTRAINT vendernp_fkey1 FOREIGN KEY (idventa)
@@ -661,9 +644,6 @@ ALTER TABLE vendere ALTER COLUMN idproductoe SET NOT NULL;
 ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]*');
 ALTER TABLE vendere ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
-
---Entidad
-ALTER TABLE vendere ADD CONSTRAINT vendere_pkey PRIMARY KEY (idventa,idproductoe);
 
 --Referencial
 ALTER TABLE vendere ADD CONSTRAINT vendere_fkey1 FOREIGN KEY (idventa)
