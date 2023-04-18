@@ -597,15 +597,17 @@ CREATE TABLE venderp(
 ALTER TABLE venderp ALTER COLUMN idventa SET NOT NULL;
 ALTER TABLE venderp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE venderp ALTER COLUMN idproductop SET NOT NULL;
+
 ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]{8}');
-ALTER TABLE venderp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
+ALTER TABLE venderp ADD CONSTRAINT cantidadproducto CHECK(cantidadproducto between 1 and 99999);
 
 --Referencial
 ALTER TABLE venderp ADD CONSTRAINT venderp_fkey1 FOREIGN KEY (idventa)
-REFERENCES venta (idventa)
+REFERENCES venta (idventa);
 
 ALTER TABLE venderp ADD CONSTRAINT venderp_fkey2 FOREIGN KEY (idproductop) 
-REFERENCES perecedero (idproductop)
+REFERENCES perecedero (idproductop);
+
 ---------------------------------------------------------------------------------------------------------------
 CREATE TABLE vendernp(
 	idventa CHAR(10),
@@ -620,14 +622,15 @@ ALTER TABLE vendernp ALTER COLUMN idventa SET NOT NULL;
 ALTER TABLE vendernp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE vendernp ALTER COLUMN idproductonp SET NOT NULL;
 ALTER TABLE vendernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]{8}');
-ALTER TABLE vendernp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
+ALTER TABLE vendernp ADD CONSTRAiNT cantidadproducto CHECK(cantidadproducto between 1 and 99999);
 
 --Referencial
 ALTER TABLE vendernp ADD CONSTRAINT vendernp_fkey1 FOREIGN KEY (idventa)
-REFERENCES venta (idventa)
+REFERENCES venta (idventa);
 
 ALTER TABLE vendernp ADD CONSTRAINT vendernp_fkey2 FOREIGN KEY (idproductonp) 
-REFERENCES noperecedero (idproductonp)
+REFERENCES noperecedero (idproductonp);
+
 ----------------------------------------------------------------------------------------------------------------------
 CREATE TABLE vendere(
 	idventa CHAR(10),
@@ -642,12 +645,14 @@ ALTER TABLE vendere ALTER COLUMN idventa SET NOT NULL;
 ALTER TABLE vendere ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE vendere ALTER COLUMN idproductoe SET NOT NULL;
 ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]{8}');
-ALTER TABLE vendere ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
-
+ALTER TABLE vendere ADD CONSTRAiNT cantidadproducto CHECK(cantidadproducto between 1 and 99999);
 
 --Referencial
 ALTER TABLE vendere ADD CONSTRAINT vendere_fkey1 FOREIGN KEY (idventa)
-REFERENCES venta (idventa)
+REFERENCES venta (idventa);
 
 ALTER TABLE vendere ADD CONSTRAINT vendere_fkey2 FOREIGN KEY (idproductoe) 
-REFERENCES electronica (idproductoe)
+REFERENCES electronica (idproductoe);
+
+
+
