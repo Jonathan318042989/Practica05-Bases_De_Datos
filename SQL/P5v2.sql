@@ -597,7 +597,7 @@ REFERENCES electronica (idproductoe);
 CREATE TABLE venderp(
 	idventa CHAR(10),
     idproductop CHAR(10),
-    cantidadproducto INT ,
+    cantidadproducto INT 
     
 );
 
@@ -606,7 +606,7 @@ CREATE TABLE venderp(
 ALTER TABLE venderp ALTER COLUMN idventa SET NOT NULL;
 ALTER TABLE venderp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
 ALTER TABLE venderp ALTER COLUMN idproductop SET NOT NULL;
-ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]*');
 ALTER TABLE venderp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
 
@@ -623,7 +623,7 @@ REFERENCES perecedero (idproductop)
 CREATE TABLE vendernp(
 	idventa CHAR(10),
     idproductonp CHAR(10),
-    cantidadproducto INT ,
+    cantidadproducto INT 
     
 );
 
@@ -649,7 +649,7 @@ REFERENCES noperecedero (idproductonp)
 CREATE TABLE vendere(
 	idventa CHAR(10),
     idproductoe CHAR(10),
-    cantidadproducto INT ,
+    cantidadproducto INT 
     
 );
 
@@ -658,7 +658,7 @@ CREATE TABLE vendere(
 ALTER TABLE vendere ALTER COLUMN idventa SET NOT NULL;
 ALTER TABLE vendere ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
 ALTER TABLE vendere ALTER COLUMN idproductoe SET NOT NULL;
-ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]*');
 ALTER TABLE vendere ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
 
