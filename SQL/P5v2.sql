@@ -3,7 +3,7 @@ DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
 CREATE TABLE sucursal(
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
 	nombre VARCHAR(50),
 	fechaapertura date,
 	horaapertura time,
@@ -20,7 +20,7 @@ CREATE TABLE sucursal(
 -- Restricciones sucursal
 
 ALTER TABLE sucursal ALTER COLUMN idsucursal SET NOT NULL;
-ALTER TABLE sucursal ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE sucursal ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE sucursal ADD CONSTRAINT nombreD1 CHECK(nombre <> '');
 ALTER TABLE sucursal ALTER COLUMN fechaapertura SET NOT NULL;
 ALTER TABLE sucursal ADD CONSTRAINT estadoD1 CHECK(estado <>'');
@@ -33,14 +33,14 @@ ALTER TABLE sucursal ADD CONSTRAINT idsucursalD2 UNIQUE(idsucursal);
 ALTER TABLE sucursal ADD CONSTRAINT sucursal_pkey PRIMARY KEY (idsucursal);
 
 CREATE TABLE telefonosucursal(
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
 	telefono CHAR(10) 
 );
 
 --Restricciones telefono
 --Dominio
 ALTER TABLE telefonosucursal ALTER COLUMN idsucursal SET NOT NULL;
-ALTER TABLE telefonosucursal ADD CONSTRAINT tidsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE telefonosucursal ADD CONSTRAINT tidsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE telefonosucursal ADD CONSTRAINT telefonoD1 CHECK (telefono SIMILAR TO '[0-9]{10}');
 
 --Entidad
@@ -131,7 +131,7 @@ REFERENCES cliente (curpcliente);
 
 CREATE TABLE cajero(
 	curpcajero CHAR(18),
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
 	nombrecajero VARCHAR(50),
 	paternocajero VARCHAR(50),
 	maternocajero VARCHAR(50),
@@ -213,7 +213,7 @@ REFERENCES cajero (curpcajero);
 
 CREATE TABLE encargado(
 	curpencargado CHAR(18),
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
 	nombreencargado VARCHAR(50),
 	paternoencargado VARCHAR(50),
 	maternoencargado VARCHAR(50),
@@ -294,7 +294,7 @@ REFERENCES encargado (curpencargado);
 
 CREATE TABLE gerente(
 	curpgerente CHAR(18),
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
 	nombregerente VARCHAR(50),
 	paternogerente VARCHAR(50),
 	maternogerente VARCHAR(50),
@@ -374,7 +374,7 @@ REFERENCES gerente (curpgerente);
 
 CREATE TABLE venta(
 	idventa CHAR(10),
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
 	curpcliente CHAR(18),
 	curpcajero CHAR(18),
 	fechaventa date,
@@ -385,9 +385,9 @@ CREATE TABLE venta(
 -- Restricciones venta
 
 ALTER TABLE venta ALTER COLUMN idventa SET NOT NULL;
-ALTER TABLE venta ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE venta ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE venta ALTER COLUMN idsucursal SET NOT NULL;
-ALTER TABLE venta ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE venta ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE venta ALTER COLUMN curpcliente SET NOT NULL;
 ALTER TABLE venta ADD CONSTRAINT curpclienteD1 CHECK(CHAR_LENGTH(curpcliente)=18);
 ALTER TABLE venta ADD CONSTRAINT curpclienteD2 CHECK(curpcliente SIMILAR TO '[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9]{2}');
@@ -431,7 +431,7 @@ CREATE TABLE electronica(
 --Restricciones de electronica
 
 ALTER TABLE electronica ALTER COLUMN idproductoe SET NOT NULL;
-ALTER TABLE electronica ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]*');
+ALTER TABLE electronica ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]{8}');
 ALTER TABLE electronica ADD CONSTRAINT nombreE1 CHECK(nombre <> '');
 ALTER TABLE electronica ADD CONSTRAINT marcaE1 CHECK(marca<>'');
 ALTER TABLE electronica ADD CONSTRAiNT precioE1 CHECK(precio between 0 and 99999);
@@ -463,7 +463,7 @@ CREATE TABLE perecedero(
 --Restricciones de perecedero
 
 ALTER TABLE perecedero ALTER COLUMN idproductop SET NOT NULL;
-ALTER TABLE perecedero ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]*');
+ALTER TABLE perecedero ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]{8}');
 ALTER TABLE perecedero ADD CONSTRAINT nombreP1 CHECK(nombre <> '');
 ALTER TABLE perecedero ADD CONSTRAINT marcaP1 CHECK(marca<>'');
 ALTER TABLE perecedero ADD CONSTRAiNT precioP1 CHECK(precio between 0 and 99999);
@@ -484,7 +484,7 @@ ALTER TABLE perecedero ADD CONSTRAINT perecedero_pkey PRIMARY KEY (idproductop);
 ------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE noperecedero(
-	idproductonp CHAR(10),
+	idproductonp CHAR(11),
 	nombre VARCHAR(50),
 	marca VARCHAR(50),
 	precio INT,
@@ -499,7 +499,7 @@ CREATE TABLE noperecedero(
 --Restricciones de noperecedero
 
 ALTER TABLE noperecedero ALTER COLUMN idproductonp SET NOT NULL;
-ALTER TABLE noperecedero ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE noperecedero ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]{8}');
 ALTER TABLE noperecedero ADD CONSTRAINT nombreNP1 CHECK(nombre <> '');
 ALTER TABLE noperecedero ADD CONSTRAINT marcaNP1 CHECK(marca<>'');
 ALTER TABLE noperecedero ADD CONSTRAiNT precioNP1 CHECK(precio between 0 and 99999);
@@ -520,16 +520,16 @@ ALTER TABLE noperecedero ADD CONSTRAINT noperecedero_pkey PRIMARY KEY (idproduct
 
 ------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE poseerp(
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
     idproductop CHAR(10),
     cantidadestock INT 
 );
 
 -- Restricciones poseerp
 ALTER TABLE poseerp ALTER COLUMN idsucursal SET NOT NULL;
-ALTER TABLE poseerp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE poseerp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE poseerp ALTER COLUMN idproductop SET NOT NULL;
-ALTER TABLE poseerp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]*');
+ALTER TABLE poseerp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]{8}');
 ALTER TABLE poseerp ADD CONSTRAINT cantidadestock1 CHECK(cantidadestock BETWEEN 1 AND 99999);
 
 -- Referencial
@@ -540,16 +540,16 @@ ALTER TABLE poseerp ADD CONSTRAINT poseerp_fkey2 FOREIGN KEY (idproductop)
 REFERENCES perecedero (idproductop);
 
 CREATE TABLE poseernp(
-	idsucursal VARCHAR(10),
-    idproductonp CHAR(10),
+	idsucursal CHAR(7),
+    idproductonp CHAR(11),
     cantidadestock INT 
 );
 
 -- Restricciones poseernp
 ALTER TABLE poseernp ALTER COLUMN idsucursal SET NOT NULL;
-ALTER TABLE poseernp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE poseernp ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE poseernp ALTER COLUMN idproductonp SET NOT NULL;
-ALTER TABLE poseernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE poseernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]{8}');
 ALTER TABLE poseernp ADD CONSTRAINT cantidadestock1 CHECK(cantidadestock BETWEEN 1 AND 99999);
 
 -- Referencial
@@ -560,16 +560,16 @@ ALTER TABLE poseernp ADD CONSTRAINT poseernp_fkey2 FOREIGN KEY (idproductonp)
 REFERENCES noperecedero (idproductonp);
 
 CREATE TABLE poseere(
-	idsucursal VARCHAR(10),
+	idsucursal CHAR(7),
     idproductoe CHAR(10),
     cantidadestock INT 
 );
 
 -- Restricciones poseere
 ALTER TABLE poseere ALTER COLUMN idsucursal SET NOT NULL;
-ALTER TABLE poseere ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]*');
+ALTER TABLE poseere ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE poseere ALTER COLUMN idproductoe SET NOT NULL;
-ALTER TABLE poseere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]*');
+ALTER TABLE poseere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]{8}');
 ALTER TABLE poseere ADD CONSTRAINT cantidadestock1 CHECK(cantidadestock BETWEEN 1 AND 99999);
 
 -- Referencial
@@ -595,9 +595,9 @@ CREATE TABLE venderp(
 
 --Restricciones venderp
 ALTER TABLE venderp ALTER COLUMN idventa SET NOT NULL;
-ALTER TABLE venderp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE venderp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE venderp ALTER COLUMN idproductop SET NOT NULL;
-ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]*');
+ALTER TABLE venderp ADD CONSTRAINT idproductop1 CHECK(idproductop SIMILAR TO 'P-[0-9]{8}');
 ALTER TABLE venderp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
 --Referencial
@@ -609,7 +609,7 @@ REFERENCES perecedero (idproductop)
 ---------------------------------------------------------------------------------------------------------------
 CREATE TABLE vendernp(
 	idventa CHAR(10),
-    idproductonp CHAR(10),
+    idproductonp CHAR(11),
     cantidadproducto INT 
     
 );
@@ -617,9 +617,9 @@ CREATE TABLE vendernp(
 
 --Restricciones vendernp
 ALTER TABLE vendernp ALTER COLUMN idventa SET NOT NULL;
-ALTER TABLE vendernp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE vendernp ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE vendernp ALTER COLUMN idproductonp SET NOT NULL;
-ALTER TABLE vendernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]*');
+ALTER TABLE vendernp ADD CONSTRAINT idproductonp1 CHECK(idproductonp SIMILAR TO 'NP-[0-9]{8}');
 ALTER TABLE vendernp ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
 --Referencial
@@ -639,9 +639,9 @@ CREATE TABLE vendere(
 
 --Restricciones vendere
 ALTER TABLE vendere ALTER COLUMN idventa SET NOT NULL;
-ALTER TABLE vendere ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]*');
+ALTER TABLE vendere ADD CONSTRAINT idventa1 CHECK(idventa SIMILAR TO 'V-[0-9]{8}');
 ALTER TABLE vendere ALTER COLUMN idproductoe SET NOT NULL;
-ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]*');
+ALTER TABLE vendere ADD CONSTRAINT idproductoe1 CHECK(idproductoe SIMILAR TO 'E-[0-9]{8}');
 ALTER TABLE vendere ADD CONSTRAiNT cantidadproducto CHECK(cantidad between 1 and 99999);
 
 
