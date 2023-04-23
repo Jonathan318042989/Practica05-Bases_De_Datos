@@ -9,6 +9,7 @@ CREATE TABLE sucursal(
 	horaapertura time,
 	horacierre time,
 	estado  VARCHAR(50),
+	municipio VARCHAR(50),
 	ciudad  VARCHAR(50),
 	colonia  VARCHAR(50),
 	calle  VARCHAR(50),
@@ -23,9 +24,13 @@ ALTER TABLE sucursal ALTER COLUMN idsucursal SET NOT NULL;
 ALTER TABLE sucursal ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE sucursal ADD CONSTRAINT nombreD1 CHECK(nombre <> '');
 ALTER TABLE sucursal ALTER COLUMN fechaapertura SET NOT NULL;
+ALTER TABLE sucursal ALTER COLUMN horaapertura SET NOT NULL;
+ALTER TABLE sucursal ALTER COLUMN horacierre SET NOT NULL;
 ALTER TABLE sucursal ADD CONSTRAINT estadoD1 CHECK(estado <>'');
+ALTER TABLE sucursal ADD CONSTRAINT municipioD1 CHECK(municipio <>'');
 ALTER TABLE sucursal ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
 ALTER TABLE sucursal ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
+ALTER TABLE sucursal ADD CONSTRAINT calleD1 CHECK(calle <>'');
 ALTER TABLE sucursal ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal SIMILAR TO '[0-9]{5}');
 ALTER TABLE sucursal ADD CONSTRAiNT numeroD1 CHECK(numero between 0 and 99999);
 --Entidad 
@@ -80,6 +85,7 @@ ALTER TABLE cliente ALTER COLUMN fechanacimiento SET NOT NULL;
 ALTER TABLE cliente ADD CONSTRAINT estadoD1 CHECK(estado <>'');
 ALTER TABLE cliente ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
 ALTER TABLE cliente ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
+ALTER TABLE cliente ADD CONSTRAINT calleD1 CHECK(calle <>'');
 ALTER TABLE cliente ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal SIMILAR TO '[0-9]{5}');
 ALTER TABLE cliente ADD CONSTRAiNT numeroD1 CHECK(numero between 0 and 99999);
 
@@ -150,7 +156,8 @@ CREATE TABLE cajero(
 ALTER TABLE cajero ALTER COLUMN curpcajero SET NOT NULL;
 ALTER TABLE cajero ADD CONSTRAINT curpcajeroD1 CHECK(CHAR_LENGTH(curpcajero)=18);
 ALTER TABLE cajero ADD CONSTRAINT curpcajeroD2 CHECK(curpcajero SIMILAR TO '[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9]{2}');
-
+ALTER TABLE cajero ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE cajero ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE cajero ADD CONSTRAINT nombrecajeroD1 CHECK(nombrecajero <> '');
 ALTER TABLE cajero ADD CONSTRAINT paternocajeroD1 CHECK(paternocajero <>'');
 ALTER TABLE cajero ADD CONSTRAINT maternocajeroD1 CHECK(maternocajero <>'');
@@ -158,6 +165,7 @@ ALTER TABLE cajero ALTER COLUMN fechanacimiento SET NOT NULL;
 ALTER TABLE cajero ADD CONSTRAINT estadoD1 CHECK(estado <>'');
 ALTER TABLE cajero ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
 ALTER TABLE cajero ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
+ALTER TABLE cajero ADD CONSTRAINT calleD1 CHECK(calle <>'');
 ALTER TABLE cajero ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal SIMILAR TO '[0-9]{5}');
 ALTER TABLE cajero ADD CONSTRAiNT numeroD1 CHECK(numero between 0 and 99999);
 
@@ -232,6 +240,8 @@ CREATE TABLE encargado(
 ALTER TABLE encargado ALTER COLUMN curpencargado SET NOT NULL;
 ALTER TABLE encargado ADD CONSTRAINT curpencargadoD1 CHECK(CHAR_LENGTH(curpencargado)=18);
 ALTER TABLE encargado ADD CONSTRAINT curpencargadoD2 CHECK(curpencargado SIMILAR TO '[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9]{2}');
+ALTER TABLE encargado ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE encargado ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE encargado ADD CONSTRAINT nombreencargadoD1 CHECK(nombreencargado <> '');
 ALTER TABLE encargado ADD CONSTRAINT paternoencargadoD1 CHECK(paternoencargado <>'');
 ALTER TABLE encargado ADD CONSTRAINT maternoencargadoD1 CHECK(maternoencargado <>'');
@@ -239,6 +249,7 @@ ALTER TABLE encargado ALTER COLUMN fechanacimiento SET NOT NULL;
 ALTER TABLE encargado ADD CONSTRAINT estadoD1 CHECK(estado <>'');
 ALTER TABLE encargado ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
 ALTER TABLE encargado ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
+ALTER TABLE encargado ADD CONSTRAINT calleD1 CHECK(calle <>'');
 ALTER TABLE encargado ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal SIMILAR TO '[0-9]{5}');
 ALTER TABLE encargado ADD CONSTRAiNT numeroD1 CHECK(numero between 0 and 99999);
 
@@ -313,6 +324,8 @@ CREATE TABLE gerente(
 ALTER TABLE gerente ALTER COLUMN curpgerente SET NOT NULL;
 ALTER TABLE gerente ADD CONSTRAINT curpgerenteD1 CHECK(CHAR_LENGTH(curpgerente)=18);
 ALTER TABLE gerente ADD CONSTRAINT curpgerenteD2 CHECK(curpgerente SIMILAR TO '[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9]{2}');
+ALTER TABLE gerente ALTER COLUMN idsucursal SET NOT NULL;
+ALTER TABLE gerente ADD CONSTRAINT idsucursalD1 CHECK (idsucursal SIMILAR TO 'S-[0-9]{5}');
 ALTER TABLE gerente ADD CONSTRAINT nombregerenteD1 CHECK(nombregerente <> '');
 ALTER TABLE gerente ADD CONSTRAINT paternogerenteD1 CHECK(paternogerente<>'');
 ALTER TABLE gerente ADD CONSTRAINT maternogerenteD1 CHECK(maternogerente <>'');
@@ -320,6 +333,7 @@ ALTER TABLE gerente ALTER COLUMN fechanacimiento SET NOT NULL;
 ALTER TABLE gerente ADD CONSTRAINT estadoD1 CHECK(estado <>'');
 ALTER TABLE gerente ADD CONSTRAINT ciudadD1 CHECK(ciudad <>'');
 ALTER TABLE gerente ADD CONSTRAINT coloniaD1 CHECK (colonia <>'');
+ALTER TABLE gerente ADD CONSTRAINT calleD1 CHECK(calle <>'');
 ALTER TABLE gerente ADD CONSTRAiNT codigopostalD1 CHECK(codigopostal SIMILAR TO '[0-9]{5}');
 ALTER TABLE gerente ADD CONSTRAiNT numeroD1 CHECK(numero between 0 and 99999);
 
