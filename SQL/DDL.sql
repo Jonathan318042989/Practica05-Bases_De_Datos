@@ -9,7 +9,6 @@ CREATE TABLE sucursal(
 	horaapertura time,
 	horacierre time,
 	estado  VARCHAR(50),
-	municipio VARCHAR(50),
 	ciudad  VARCHAR(50),
 	colonia  VARCHAR(50),
 	calle  VARCHAR(50),
@@ -17,7 +16,8 @@ CREATE TABLE sucursal(
 	codigopostal CHAR(5)
 	
 );
-
+ALTER TABLE sucursal
+ADD municipio VARCHAR(50);
 -- Restricciones sucursal
 
 ALTER TABLE sucursal ALTER COLUMN idsucursal SET NOT NULL;
